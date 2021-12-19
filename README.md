@@ -6,6 +6,7 @@ the <a href=https://github.com/stooged/bin2html-900/blob/main/template.dat>templ
 
 the <a href=https://github.com/stooged/bin2html-900/blob/main/jsreq-template.dat>jsreq-template.dat</a> file is is used to create a .html payload file that still requires int64.js, rop.js and webkit.js this can be used to save space by not adding these scripts to the main payload.html file.
 
+<br><br>
 
 <b>usage:</b>
 
@@ -19,7 +20,7 @@ for .html payloads that will require external .js:
 
 bin2html.py [binfile] 1
 
-<br>
+<br><br>
 
 <b>all in one example:</b>
 
