@@ -8,17 +8,25 @@ the jsreq-template.dat file is is used to create a .html payload file that still
 
 
 <b>usage:</b>
+
 for all in one .html payloads:
+
 bin2html.py [binfile]
 
+<br>
 
 for .html payloads that will require external .js:
+
 bin2html.py [binfile] 1
 
+<br>
 
 <b>all in one example:</b>
+
 bin2html.py AppToUsb.bin
 
+<br>
 
 <b>external .js example:</b>
+
 bin2html.py AppToUsb.bin 1
