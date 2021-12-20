@@ -593,6 +593,7 @@ var trigger_spray = function () {
     }
     chain.run();
 	if (chain.syscall(23, 0).low == 0) {
+		alert("exploit success, load payload?");
 		return;
 	}
 	alert("failed to trigger exploit kernel heap might be corrupted, try again or reboot the console");
