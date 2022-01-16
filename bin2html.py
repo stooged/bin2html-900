@@ -3,6 +3,7 @@
 import os
 import sys
 import binascii
+import template
 try:filename = sys.argv[1]
 except:sys.exit(".bin file required\n\nExample: bin2html.py payload.bin")
 try:jsreq =sys.argv[2]
@@ -17,13 +18,11 @@ with open(filename, 'rb') as f:
         chnk = f.read(4)
 payloadjs = payloadjs[:-1] + "];"
 f.close()
-template= ""
-templatefile = "template.dat"
-if len(jsreq) > 0:templatefile = "jsreq-template.dat"
-with open (templatefile, "r", encoding="utf-8") as f:
-    template=f.read()
-f.close()
-indextmp = template.replace('##PAYLOAD##', payloadjs)  
+if len(jsreq) > 0:
+    tempdata= template.JSREQ_TEMPLATE()
+else: 
+    tempdata= template.FULL_TEMPLATE()
+indextmp = tempdata.replace('##PAYLOAD##', payloadjs)  
 f = open(filename.replace('.bin','.html'), 'w+', encoding="utf-8") 
 f.write(indextmp)
 f.close()

