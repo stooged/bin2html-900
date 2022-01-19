@@ -22,7 +22,7 @@ if len(jsreq) > 0:
     tempdata= template.JSREQ_TEMPLATE()
 else: 
     tempdata= template.FULL_TEMPLATE()
-indextmp = tempdata.replace('##PAYLOAD##', payloadjs)  
+indextmp = tempdata.replace('##PAYLOAD##', payloadjs)
 f = open(filename.replace('.bin','.html'), 'w+', encoding="utf-8") 
 f.write(indextmp)
 f.close()
